@@ -28,4 +28,11 @@ class PostController extends Controller
         $response = Post::create($data);
         return response()->json($response, 201);
     }
+
+    // edit data -> edit api endpoint
+    public function update(Request $request, Post $post)
+    {
+        $post->update($request->all());
+        return response()->json($post, 200);
+    }
 }
