@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    // browse semua data
     public function index()
     {
         $data = Post::all();
@@ -18,5 +19,13 @@ class PostController extends Controller
     {
         $data = Post::find($id);
         return response()->json($data, 200);
+    }
+
+    // tambah data -> add api endpoint
+    public function store(Request $request)
+    {
+        $data = $request->all();
+        $response = Post::create($data);
+        return response()->json($response, 201);
     }
 }
