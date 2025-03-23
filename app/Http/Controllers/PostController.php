@@ -35,4 +35,11 @@ class PostController extends Controller
         $post->update($request->all());
         return response()->json($post, 200);
     }
+
+    // delete data -> delete api endpoinnt
+    public function destroy(Post $post)
+    {
+        $post->delete();
+        return response()->json(null, 200);
+    }
 }
