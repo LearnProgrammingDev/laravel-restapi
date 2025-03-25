@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use App\Http\Resources\Post\PostResource;
 use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
@@ -15,7 +16,7 @@ class PostController extends Controller
 
         // validasi dan response
         $validator = Validator::make($data, [
-            'title' => ['require', 'min:5']
+            'title' => ['required', 'min:5']
         ]);
 
         if ($validator->fails()) {
@@ -38,7 +39,10 @@ class PostController extends Controller
                 'message' => 'Resource not found!'
             ], 404);
         }
-        return response()->json($data, 200);
+        // return response()->json($data, 200);
+        // return $data;
+
+        return response()->json(new PostResource($data), 200);
     }
 
     // tambah data -> add api endpoint
