@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class PostController extends Controller
 {
@@ -11,6 +12,17 @@ class PostController extends Controller
     public function index()
     {
         $data = Post::all();
+
+        // validasi dan response
+        $validator = Validator::make($data, [
+            'title' => ['require', 'min:5']
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors()
+            ], 400);
+        }
         return response()->json($data, 200);
     }
 
@@ -20,6 +32,7 @@ class PostController extends Controller
         $data = Post::find($id);
 
 
+        // ketika data kosong tidak ada response
         if (is_null($data)) {
             return response()->json([
                 'message' => 'Resource not found!'
